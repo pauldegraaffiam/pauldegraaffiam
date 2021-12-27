@@ -58,7 +58,7 @@ The slack configuration requires administrative accces to be able to execute the
 #### Create a Slack Application
 To obtain an authorization token that is used in a SecZetta workflow to send a slack message, go to the slack console to create a new application, located at https://api.slack.com/apps. Follow the steps below to create the new application:
 
-- Next click on the Create New App button:
+- Next click on the `Create New App` button:
 - You can chose to either create the App from scratch or create it from an existing app manifest. The easier option is to use the manifest file that is stored in the Github respository for this integration. An example manifest file (YAML) is shown below:
 
 _metadata:
