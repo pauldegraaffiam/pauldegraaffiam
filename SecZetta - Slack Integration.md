@@ -52,8 +52,39 @@ The SecZetta / Slack integration is configured as an REST API integration in a w
 
 This section provides the required configuration for the features described above:
 
-### Data Aggregation (IDN Initiated)
-The Data aggregation integration requires an IDN Web Services connector. This connector will utilize the /profiles endpoint of the SecZetta API for Life Cycle and the /idproxy/iodintities endpoint for Consolidation.
+### Slack Configuration
+The slack configuration requires administrative accces to be able to execute the steps below. 
+
+#### Create a Slack Application
+To obtain an authorization token that is used in a SecZetta workflow to send a slack message, go to the slack console to create a new application, located at https://api.slack.com/apps. Follow the steps below to create the new application:
+
+- Next click on the Create New App button:
+- You can chose to either create the App from scratch or create it from an existing app manifest. The easier option is to use the manifest file that is stored in the Github respository for this integration. An example manifest file (YAML) is shown below:
+
+_metadata:
+  major_version: 1
+  minor_version: 1
+display_information:
+  name: ***SecZetta
+features:
+  bot_user:
+    display_name: <Slackdemo>
+    always_online: false
+oauth_config:
+  scopes:
+    bot:
+      - chat:write
+      - chat:write.customize
+      - chat:write.public
+settings:
+  org_deploy_enabled: false
+  socket_mode_enabled: false
+  token_rotation_enabled: false
+
+The <name> field indicates the name of the application and the <display_name> is what shows up in the slack interface as the bot name, see below:
+
+
+
 
 #### SailPoint Connector Configuration
 Create a new source connector and then refer to the following table for the parameters required to setup the connector for the Life Cycle 
