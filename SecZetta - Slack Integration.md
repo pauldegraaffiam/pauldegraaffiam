@@ -34,8 +34,8 @@ The SecZetta / Slack integration is configured as an REST API integration in a w
 - Slack:
   - Administrative access in Slack
   - Create an Application in Slack to obtain an authorization token (Bot or an Application token)
-  - Create a manifest for the `chat.write` for the oauth scope
-  - if you want to send message to channels the application needs to be add to the respective channel as an integration. Alternative you can add the following scopes `chat:write.customize` and `chat:write.public`.
+  - Create a manifest for the application with `chat.write` for the oauth scope
+  - if you want to send message to channels the application needs to be added to the respective channel as an integration. Alternative you can add the following oauth scopes `chat:write.customize` and `chat:write.public` to the application permissions.
   - Install the application into the slack environment  
 - SecZetta
   - Create an attribute to store the Slack ID or Slack User name of the user (people profile)
@@ -53,12 +53,12 @@ The SecZetta / Slack integration is configured as an REST API integration in a w
 This section provides the required configuration for the features described above:
 
 ### Slack Configuration
-The slack configuration requires administrative accces to be able to execute the steps below. 
+The application configuration requires Slack administrative accces to be able to execute the steps below. 
 
-#### Create a Slack Application
+#### Create a Slack Application and Obtain Authorization Token
 To obtain an authorization token that is used in a SecZetta workflow to send a slack message, go to the slack console to create a new application, located at https://api.slack.com/apps. Follow the steps below to create the new application:
 
-- Next click on the `Create New App` button:
+- Click on the `Create New App` button:
 - You can chose to either create the App from scratch or create it from an existing app manifest. The easier option is to use the manifest file that is stored in the Github respository for this integration. An example manifest file (YAML) is shown below:
 <br>
 _metadata:
@@ -83,16 +83,28 @@ settings:
 <br>
 The `name` field indicates the name of the application and the `display_name` is what shows up in the slack interface as the bot name, see below:
 
-![Application Name Example] (/img/seczetta_slack-application_Integration_display_name_example)
+![Application Name Example](img/seczetta_slack_application_integration_display_name_example.png)
 
+`Note:` You can add a logo if you like, but it needs to be between 512 and 2000 pixels and no larger than 16mb.
 
-#### SailPoint Connector Configuration
-Create a new source connector and then refer to the following table for the parameters required to setup the connector for the Life Cycle 
+- Next you are asked about the slack workspace you want to develop your application in. Select the workspace you want to use. 
+- Next you are shown a default app manifest file You can copy the content of the provided manifest file. Update the `name` and `display_name` fields if so desired and no application with the same name exists in the workspace. 
+- Next you are shown a summary of the application oauth permissions and features and if these are correct, then press the `Create` button.
+- Next you are shown the full manifest of the application in the Basic Information section of the application.
+- Next go to the OAuth & Permission Section on the screen and a message appears that to get your token, you need to install the app into the workspace first. 
+- Next install the application into the workdspace by selecting the button to do so.
+- After the install is succesful, you see the `Bot User Oauth Token` displayed and you can use the `Copy` button to copy the token value as you need it for the configuration of the SecZetta workflow to send a Slack message. 
+
+This concludes the slack configuration part.
+
+#### SecZetta Workflow Configuration to send a Slack Message
+Create a new `Create` workflow and select REST API as the only action in the workflow so it can be called from any other workflow.
+
+To Configure the REST API parameters, use the folllowing table below:
 
 Parameter | Description
 --------- | --------------
-Source Name | SecZetta
-Source Description | SecZetta connector
+Description | Provide a description of the REST API
 Authentication Settings | No / Custom Authentication
 Base URL | `https://<your-seczetta-tenant-url>/api` <br/>
 (i.e. https://company.mynonemployee.com)
