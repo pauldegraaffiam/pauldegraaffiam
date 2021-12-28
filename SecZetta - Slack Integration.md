@@ -60,15 +60,15 @@ To obtain an authorization token that is used in a SecZetta workflow to send a s
 
 - Next click on the `Create New App` button:
 - You can chose to either create the App from scratch or create it from an existing app manifest. The easier option is to use the manifest file that is stored in the Github respository for this integration. An example manifest file (YAML) is shown below:
-
+<br>
 _metadata:
   major_version: 1
   minor_version: 1
 display_information:
-  name: `SecZetta`
+  name: `SecZetta Integration`
 features:
   bot_user:
-    display_name: `Slackdemo`
+    display_name: `SecZetta Bot`
     always_online: false
 oauth_config:
   scopes:
@@ -80,10 +80,10 @@ settings:
   org_deploy_enabled: false
   socket_mode_enabled: false
   token_rotation_enabled: false
+<br>
+The `name` field indicates the name of the application and the `display_name` is what shows up in the slack interface as the bot name, see below:
 
-The <name> field indicates the name of the application and the <display_name> is what shows up in the slack interface as the bot name, see below:
-
-
+![Application Name Example] (/img/seczetta_slack-application_Integration_display_name_example)
 
 
 #### SailPoint Connector Configuration
