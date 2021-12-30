@@ -36,7 +36,8 @@ The SecZetta / Slack integration is configured as an REST API integration in a w
   - Create an Application in Slack to obtain an authorization token (Bot or an Application token)
   - Create a manifest for the application with `chat.write` for the oauth scope
   - if you want to send message to channels the application needs to be added to the respective channel as an integration. Alternative you can add the following oauth scopes `chat:write.customize` and `chat:write.public` to the application permissions.
-  - Install the application into the slack environment  
+  - Install the application into the slack environment
+  - Add the `user:read` Oauth scopes to the application to be able to read user information through an API call so you can store the value in the SecZetta People Profile   
 - SecZetta
   - Create an attribute to store the Slack ID or Slack User name of the user (people profile)
   - Create a batch / automated workflow to obtain the slack id or user name from all relevant slack users and store it in the associated people profile  
