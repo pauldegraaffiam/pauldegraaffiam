@@ -7,18 +7,13 @@
     - [Architecture Overview](#architecture-overview)
   - [Supported Features](#supported-features)
   - [Prerequisites](#prerequisites)
-    - [Generating a SecZetta API Key](#generating-a-seczetta-api-key)
-      - [SecZetta Admin Dashboard](#seczetta-admin-dashboard)
-      - [SecZetta API Page](#seczetta-api-page)
-    - [Getting BitSight API Token](#getting-bitsight-api-token)
-      - [Account Dropdown](#account-dropdown)
-      - [Generate BitSight API Key](#generate-bitsight-api-key)
-  - [Configuration](#configuration)
-    - [Integration Script](#integration-script)
-  - [API Usage](#api-usage)
-    - [BitSight API](#bitsight-api)
-      - [Authentication](#authentication)
-      - [GET /ratings/v1/companies](#get--ratings-v1-companies)
+  - [High Level Architecture](#High-Level-Architecture)
+    - [API Integration](#API-Integration)
+  - [Configuration Parameters](#Configuration-Parameters)
+      - [Slack Configuration](#Slack-Configuration)
+        - [Create a Slack Application and Obtain Authorization Token](#Create-a-Slack-Application-and-Obtain-Authorization-Token)
+      -  [SecZetta Configuration](#SecZetta-Configuration)
+        - [SecZetta Workflow Configuration to send a Slack Message](#SecZetta-Workflow-Configuration-to-send-a-Slack-Message)
 
 ## Overview
 
@@ -77,6 +72,7 @@ oauth_config:
       - chat:write
       - chat:write.customize
       - chat:write.public
+      - user:read
 settings:
   org_deploy_enabled: false
   socket_mode_enabled: false
@@ -98,6 +94,9 @@ The `name` field indicates the name of the application and the `display_name` is
 
 This concludes the slack configuration part.
 
+### SecZetta Configuration
+The configuration on the SecZetta side requires administrative accces to be able to configure a workflow to be used to send the slack message. 
+
 #### SecZetta Workflow Configuration to send a Slack Message
 Create a new `Create` workflow and select REST API as the only action in the workflow so it can be called from any other workflow.
 
@@ -105,22 +104,23 @@ To Configure the REST API parameters, use the folllowing table below:
 
 Parameter | Description
 --------- | --------------
+BASIC SETTINGS |
 Description | Provide a description of the REST API
-Authentication Settings | No / Custom Authentication
-Base URL | `https://<your-seczetta-tenant-url>/api` <br/>
-(i.e. https://company.mynonemployee.com)
-HTTP Operations (HO) | Add 1 operation (could also add a test connection operations if you choose)
-General Information -> Operation Name | Aggregate Users
-General Information -> Operation Type | Account Aggregation
-General Information -> Context Url | `/profiles?profile_type_id=<profile_type_id>&query[limit]=<limit>&query[offset]=0`  </br> </br> *Notice there are 2 ‘variables’ there profile_type_id and limit* </br></br> The profile_type_id variable is specific to your environment. More details below on how to grab your profile_type_id. Normally you would want the people profile type </br></br>The limit variable is used to return a set number of profiles per API call (this api endpoint uses paging, see below for more details)
-General Information -> HTTP Method | GET
-Header -> Key/Value |Add 3 key/value pairs under the header tab: </br> Authorization: Token token=<your-seczetta-token> </br> Accept: application/json </br> Content-Type: application/json
-Body |No Body required
-Response Information -> Root Path | Profiles
-Response Information -> Success Code | 200
-Response Mapping | Here is where you map the response of the SecZetta API to IdentityNow. Remember to use attributes.<attribute-name>
-Paging -> Initial Page Offset | 0
-Paging -> Paging Steps | $sz_limit$ = 100 </br>TERMINATE_IF $RECORDS_COUNT$ < $sz_limit$</br>$sz_offset$ = $sz_offset$ + $sz_limit$</br>$endpoint.fullUrl$ = $application.baseUrl$ + "/profiles?profile_type_id=<profile_type_id> &query[limit]=" + $sz_limit$ + "&query[offset]=" + $sz_offset$</br></br>*More details below*
+AUTHENTICATION
+Auth Type | None
+REQUEST |
+HTTP Verb | POST
+End point | `https://slack.com/api/chat.postMessage`
+Headers |
+Content-Type | application/json; charset=utf-8
+Authorization | Bearer Token Value
+Json Body |
+{
+  "Text": "slack message to send",
+  "channel": "slack channel name/id or slack username/id"  
+}
+
+Note: you can use liquid in both the text of the slack message and the channel as we have the slack user id stored in an SZ attribute. 
 
 #### API Authorization Token
 
