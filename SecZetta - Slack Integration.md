@@ -128,10 +128,10 @@ Note: you can use liquid in both the text of the slack message and the channel a
 #### Example JSON using Liquid
 The JSON example below shows an example on how to use liquid to send a slack message to the one execuing the workflow and informing them when the profile for the new people profile is created.
 
-`{
+<br>`{
     "text" : "Profile for  {{ profile.name }} has been created",
     "channel" : "{{ attribute.slack_account_ne_attribute }}"
-}`
+}`</br>
 
 
 #### Profile Type ID
