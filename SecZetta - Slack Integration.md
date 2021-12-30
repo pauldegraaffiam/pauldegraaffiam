@@ -119,12 +119,20 @@ Json Body |
   "Text": "slack message to send",
   "channel": "slack channel name/id or slack username/id"  
 }
+RESPONSE |
+Status Code Mapping | You may want to map the response code of the API
+Data Mappings(s) | There is no need to 
 
 Note: you can use liquid in both the text of the slack message and the channel as we have the slack user id stored in an SZ attribute. 
 
-#### API Authorization Token
+#### Example JSON using Liquid
+The JSON example below shows an example on how to use liquid to send a slack message to the one execuing the workflow and informing them when the profile for the new people profile is created.
 
-To utilize the /profiles endpoint within the SecZetta API, you will require an authorization token. To create a new token, navigate to the Admin side of SecZetta -> System -> API. From there, create a new API token and use that in the connector configuration above
+`{
+    "text" : "Profile for  {{ profile.name }} has been created",
+    "channel" : "{{ attribute.slack_account_ne_attribute }}"
+}`
+
 
 #### Profile Type ID
 
