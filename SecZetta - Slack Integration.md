@@ -213,12 +213,9 @@ This example send the profile name that is created during the execution of the w
 This example send the profile name that is created during the execution of the workflow to the `general` Slack channel using the name of the Slack channel versus the Slack ID of the channel.
 <br>
 { 
-<br>   
- "text" : "Profile for  {{ profile.name }} has been created", 
-<br>   
+ "text" : "Profile for  {{ profile.name }} has been created",    
  "channel" : "general"
-<br> 
- }
+}
 <br> 
 
 This concludes the SecZetta configurations.
