@@ -123,8 +123,7 @@ End point | `https://slack.com/api/users.lookupByEmail?email={{ attribute.email 
 Headers |
 Content-Type | application/x-www-form-urlencoded
 Authorization | Bearer Token Value
-Json Body |
-{}
+Json Body | {}
 RESPONSE |
 Status Code Mapping | You may want to map the response code of the API
 Data Mappings(s) |
@@ -171,18 +170,18 @@ BASIC SETTINGS |
 Description | Provide a description of the REST API
 AUTHENTICATION
 Auth Type | None
-REQUEST |
+REQUEST 
 HTTP Verb | POST
 End point | `https://slack.com/api/chat.postMessage`
-Headers |
+Headers 
 Content-Type | application/json; charset=utf-8
 Authorization | Bearer Token Value
-Json Body |
+Json Body 
 {
   "Text": "slack message to send",
   "channel": "slack channel name/id or slack username/id"  
 }
-RESPONSE |
+RESPONSE 
 Status Code Mapping | You may want to map the response code of the API
 Data Mappings(s) | There is no need to 
 
@@ -209,5 +208,4 @@ Example 2: This example send the profile name that is created during the executi
 
 The workflow requires no permissions as it is meant to be executed as a sub routine. 
 
-
-
+This concludes the SecZetta configurations.
