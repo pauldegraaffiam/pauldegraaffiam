@@ -12,13 +12,13 @@
   - [Configuration Parameters](#Configuration-Parameters)
     - [Slack Configuration](#Slack-Configuration)
       - [Create a Slack Application and Obtain Authorization Token](#Create-a-Slack-Application-and-Obtain-Authorization-Token)
-      - [SecZetta Configuration](#SecZetta-Configuration)
-        - [SecZetta Update Workflow Configuration to retrieve Slack ID](SecZetta-Update-Workflow-Configuration-to-retrieve-Slack-ID)
-          - [Workflow Permissions Retrieve Slack ID](Workflow-Permissions-Retrieve-Slack-ID)
-        - [SecZetta Batches Workflow Configuration to Update People Profile Records](SecZetta-Batches-Workflow-Configuration-to-Update-People-Profile-Records)
-          - [Workflow Permissions Update Profile Records](Workflow-Permissions-Update-Profile-Records)
-        - [SecZetta Workflow Configuration to send a Slack Message](#SecZetta-Workflow-Configuration-to-send-a-Slack-Message)
-          - [Workflow Permissions Send Slack Message](Workflow-Permissions-Send-Slack-Message)
+    - [SecZetta Configuration](#SecZetta-Configuration)
+      - [SecZetta Update Workflow Configuration to retrieve Slack ID](SecZetta-Update-Workflow-Configuration-to-retrieve-Slack-ID)
+        - [Workflow Permissions Retrieve Slack ID](Workflow-Permissions-Retrieve-Slack-ID)
+      - [SecZetta Batches Workflow Configuration to Update People Profile Records](SecZetta-Batches-Workflow-Configuration-to-Update-People-Profile-Records)
+        - [Workflow Permissions Update Profile Records](Workflow-Permissions-Update-Profile-Records)
+      - [SecZetta Workflow Configuration to send a Slack Message](#SecZetta-Workflow-Configuration-to-send-a-Slack-Message)
+        - [Workflow Permissions Send Slack Message](Workflow-Permissions-Send-Slack-Message)
 
 ## Overview
 
