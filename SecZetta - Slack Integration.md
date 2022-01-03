@@ -59,6 +59,7 @@ To obtain an authorization token that is used in a SecZetta workflow to send a s
 
 ![Example YAML File](img/slack-application-manifest.yml)
 
+{{=<% %>=}}
 _metadata:
   major_version: 1
   minor_version: 1
@@ -79,7 +80,8 @@ settings:
   org_deploy_enabled: false
   socket_mode_enabled: false
   token_rotation_enabled: false
-<br>
+<%={{ }}=%>
+
 The `name` field indicates the name of the application and the `display_name` is what shows up in the slack interface as the bot name, see below:
 
 ![Application Name Example](img/seczetta_slack_application_integration_display_name_example.png)
