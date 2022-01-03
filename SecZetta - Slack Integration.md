@@ -98,18 +98,70 @@ The `name` field indicates the name of the application and the `display_name` is
 
 Note: Any changes to the OAuth permissions requires the application to be reinstalled in the workspace.
 
-This concludes the slack configuration part.
+This concludes the Slack configuration part.
 
 ### SecZetta Configuration
 The configuration on the SecZetta side requires administrative accces to be able to configure the workflows get the Slack ID of the user and so it can be used to send the slack message. 
 
-
 #### SecZetta Update Workflow Configuration to retrieve Slack ID
 To be able to send a Slack message to a user we need to retrieve the Slack ID or Name of the Slack account and store it in an SZ attribute. To be able to obtain the Slack ID of a user use the Slack API called `users.lookupByEmail` and provide the email address on the API call using liquid to reference the email attribute of the user using `{{attribute.email}}`. For example:
-https://slack.com/api/users.lookupByEmail?email={{ attribute.email }}     
+https://slack.com/api/users.lookupByEmail?email={{ attribute.email }} 
+
+Create a new `Update` workflow and select REST API as the only action in the workflow so it can be called from other workflow.
+
+To Configure the REST API parameters, use the folllowing table below:
+
+Parameter | Description
+--------- | --------------
+BASIC SETTINGS |
+Description | Provide a description of the REST API
+AUTHENTICATION
+Auth Type | None
+REQUEST |
+HTTP Verb | GET
+End point | `https://slack.com/api/users.lookupByEmail?email={{ attribute.email }}`
+Headers |
+Content-Type | application/x-www-form-urlencoded
+Authorization | Bearer Token Value
+Json Body |
+{}
+RESPONSE |
+Status Code Mapping | You may want to map the response code of the API
+Data Mappings(s) |
+Path | user id
+Attribute | slack_account (this is the new text attribute to store the Slack ID value in)
+
+An Example of this workflow can be found here: https://paulsandbox.mynonemployee.com/neprofile_admin/workflows/6e2c2270-29ce-4bb7-aa01-ba3da120b38f/workflow_actions/cd628f1b-bef1-48ca-b550-ce0bfb76dfe1 
+
+#### Workflow Permissions
+
+The workflow requires no permissions as it is meant to be executed as a sub routine. 
+
+#### SecZetta Batches Workflow Configuration to Update People Profile Records
+To be able to update the people profile records I suggest to create a `Batches` workflow to select the people profiles that have no Slack ID in their profile and then manually select the profiles that you want to update with their Slack ID so you can send them a message.
+
+Create a new `Batches` workflow and configure the parameters as defined in the table below: 
+
+Parameter | Description
+--------- | --------------
+Name | Give the workflow a name that is reflective of the function performed
+UID | value is automatically assigned by SZ
+Make all profiles available | Select Yes
+Create a new request for each profile selected | Select Yes 
+Description | Provide a description of the REST API
+Position | Pick a number
+Conditions | Add the condition to check if the Slack Account profile attribute is absent
+
+An Example of this workflow can be found here:
+
+https://paulsandbox.mynonemployee.com/neprofile_admin/workflows/aa337e43-6db9-447a-85f2-89cd4d8ae217/actions 
+
+#### Workflow Permissions
+
+The workflow permissions are assigned to admins or need to be assigned to anybody that needs to update these profile records.
 
 #### SecZetta Workflow Configuration to send a Slack Message
-Create a new `Create` workflow and select REST API as the only action in the workflow so it can be called from any other workflow.
+Create a new `Create` workflow and select REST API as the only action in the workflow so it can be called from other workflow.
 
 To Configure the REST API parameters, use the folllowing table below:
 
