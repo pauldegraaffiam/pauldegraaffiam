@@ -61,14 +61,14 @@ To obtain an authorization token that is used in a SecZetta workflow to send a s
 
 _metadata:<br>
   major_version: 1 <br>
-  minor_version: 1
-display_information:
-  name: `SecZetta Integration`
-features:
-  bot_user:
-    display_name: `SecZetta Bot`
-    always_online: false
-oauth_config:
+  minor_version: 1 <br>
+display_information: <br>
+  name: `SecZetta Integration` <br>
+features: <br>
+  bot_user: <br>
+    display_name: `SecZetta Bot` <br>
+    always_online: false <br>
+oauth_config: <br>
   scopes:
     bot:
       - chat:write
