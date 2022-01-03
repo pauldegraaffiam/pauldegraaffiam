@@ -12,8 +12,13 @@
   - [Configuration Parameters](#Configuration-Parameters)
       - [Slack Configuration](#Slack-Configuration)
         - [Create a Slack Application and Obtain Authorization Token](#Create-a-Slack-Application-and-Obtain-Authorization-Token)
-      -  [SecZetta Configuration](#SecZetta-Configuration)
+      - [SecZetta Configuration](#SecZetta-Configuration)
+        - [SecZetta Update Workflow Configuration to retrieve Slack ID](SecZetta-Update-Workflow-Configuration-to-retrieve-Slack-ID)
+          - [Workflow Permissions Retrieve Slack ID](Workflow-Permissions-Retrieve-Slack-ID)
+        - [SecZetta Batches Workflow Configuration to Update People Profile Records](SecZetta-Batches-Workflow-Configuration-to-Update-People-Profile-Records)
+          - [Workflow Permissions Update Profile Records](Workflow-Permissions-Update-Profile-Records)
         - [SecZetta Workflow Configuration to send a Slack Message](#SecZetta-Workflow-Configuration-to-send-a-Slack-Message)
+          - [Workflow Permissions Send Slack Message](Workflow-Permissions-Send-Slack-Message)
 
 ## Overview
 
@@ -132,7 +137,7 @@ Attribute | slack_account (this is the new text attribute to store the Slack ID 
 
 An Example of this workflow can be found here: https://paulsandbox.mynonemployee.com/neprofile_admin/workflows/6e2c2270-29ce-4bb7-aa01-ba3da120b38f/workflow_actions/cd628f1b-bef1-48ca-b550-ce0bfb76dfe1 
 
-#### Workflow Permissions
+##### Workflow Permissions Retrieve Slack ID
 
 The workflow requires no permissions as it is meant to be executed as a sub routine. 
 
@@ -155,7 +160,7 @@ An Example of this workflow can be found here:
 
 https://paulsandbox.mynonemployee.com/neprofile_admin/workflows/aa337e43-6db9-447a-85f2-89cd4d8ae217/actions 
 
-#### Workflow Permissions
+##### Workflow Permissions Update Profile Records
 
 The workflow permissions are assigned to admins or need to be assigned to anybody that needs to update these profile records.
 
@@ -187,25 +192,29 @@ Data Mappings(s) | There is no need to
 
 Note: you can use liquid in both the text of the slack message and the channel as we have the slack user id stored in an SZ attribute. 
 
-#### JSON Examples using Liquid
+##### Workflow Permissions Send Slack Message
+
+The workflow requires no permissions as it is meant to be executed as a sub routine. 
+
+#### JSON Examples using Liquid to send a message
 The JSON examples below shows how to use liquid for arguments to be send within a slack message.
 
-Example 1: This example send the profile name that is created during the execution of the workflow to requestor using the slack id stored in the referenced SZ attribute.
+##### Example 1 - Send Message to a Slack User
+
+This example send the profile name that is created during the execution of the workflow to the requestor using the Slack ID stored in the referenced SZ attribute.
 
 `{
     "text" : "Profile for  {{ profile.name }} has been created",
    "channel" : "{{ attribute.slack_account_ne_attribute }}"
 }`
 
-Example 2: This example send the profile name that is created during the execution of the workflow to general slack channel using the name of the slack channel versus the slack id of the channel.
+##### Example 2 - Send Message to a Slack Channel
+
+This example send the profile name that is created during the execution of the workflow to the `general` Slack channel using the name of the Slack channel versus the Slack ID of the channel.
 
 `{
     "text" : "Profile for  {{ profile.name }} has been created",
     "channel" : "general"
 }`
-
-#### Workflow Permissions
-
-The workflow requires no permissions as it is meant to be executed as a sub routine. 
 
 This concludes the SecZetta configurations.
