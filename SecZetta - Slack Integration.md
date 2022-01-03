@@ -56,7 +56,9 @@ To obtain an authorization token that is used in a SecZetta workflow to send a s
 
 - Click on the `Create New App` button:
 - You can chose to either create the App from scratch or create it from an existing app manifest. The easier option is to use the manifest file that is stored in the Github respository for this integration. An example manifest file (YAML) is shown below:
-<br>
+
+![Example YAML File](img/slack-application-manifest.yml)
+
 _metadata:
   major_version: 1
   minor_version: 1
@@ -125,10 +127,10 @@ Data Mappings(s) | There is no need to
 
 Note: you can use liquid in both the text of the slack message and the channel as we have the slack user id stored in an SZ attribute. 
 
-#### Examples of JSON using Liquid
-The JSON examples below shows how to use liquid to send a slack message.
+#### JSON Examples using Liquid
+The JSON examples below shows how to use liquid for arguments to be send within a slack message.
 
-Example 1: This example send the profile name that is created during the execution of the workflow to requestor's usinb the slack id stored in the referenced SZ attribute.
+Example 1: This example send the profile name that is created during the execution of the workflow to requestor using the slack id stored in the referenced SZ attribute.
 
 `{
     "text" : "Profile for  {{ profile.name }} has been created",
