@@ -203,18 +203,18 @@ The JSON examples below shows how to use liquid for arguments to be send within 
 
 This example send the profile name that is created during the execution of the workflow to the requestor using the Slack ID stored in the referenced SZ attribute.
 
-`{
-    "text" : "Profile for  {{ profile.name }} has been created",
-   "channel" : "{{ attribute.slack_account_ne_attribute }}"
-}`
+`{ <br>
+    "text" : "Profile for  {{ profile.name }} has been created", <br>
+   "channel" : "{{ attribute.slack_account_ne_attribute }}" <br>
+}` <br>
 
 ##### Example 2 - Send Message to a Slack Channel
 
 This example send the profile name that is created during the execution of the workflow to the `general` Slack channel using the name of the Slack channel versus the Slack ID of the channel.
 
-`{
-    "text" : "Profile for  {{ profile.name }} has been created",
-    "channel" : "general"
-}`
+`{ <br>
+    "text" : "Profile for  {{ profile.name }} has been created", <br>
+    "channel" : "general" <br>
+}` <br>
 
 This concludes the SecZetta configurations.
