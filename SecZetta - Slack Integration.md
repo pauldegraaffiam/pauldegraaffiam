@@ -32,10 +32,11 @@ The SecZetta / Slack integration is configured as an REST API integration in a w
   - Create a manifest for the application with `chat.write` for the oauth scope
   - if you want to send message to channels the application needs to be added to the respective channel as an integration. Alternative you can add the following oauth scopes `chat:write.customize` and `chat:write.public` to the application permissions.
   - Install the application into the slack environment
-  - Add the `user:read` Oauth scopes to the application to be able to read user information through an API call so you can store the value in the SecZetta People Profile   
+  - Add the `users:read` , `users:read.email` and `users.profile:read` OAuth scopes to the application to be able to read the user profile information based on the SZ email addresss and obtain the slack ID through an Slack API call so you can store the value in the SecZetta People Profile   
 - SecZetta
   - Create an attribute to store the Slack ID or Slack User name of the user (people profile)
-  - Create a batch / automated workflow to obtain the slack id or user name from all relevant slack users and store it in the associated people profile  
+  - Create a `batches` workflow to obtain the slack id or user name from all relevant slack users and store it in the associated people profile
+  - Create an `update` workflow that will act as a sub routine to be called from the batches workflow to get the Slack ID of the user and pass it back to the batches workflow    
   - Create a workflow to use the API call to send the message to a slack channel or slack user  
 
 ## High Level Architecture
@@ -55,9 +56,8 @@ The application configuration requires Slack administrative accces to be able to
 To obtain an authorization token that is used in a SecZetta workflow to send a slack message, go to the slack console to create a new application, located at https://api.slack.com/apps. Follow the steps below to create the new application:
 
 - Click on the `Create New App` button:
-- You can chose to either create the App from scratch or create it from an existing app manifest. The easier option is to use the manifest file that is stored in the Github respository for this integration. An example manifest file (YAML) is shown below:
+- You can chose to either create the App from scratch or create it from an existing app manifest. The easier option is to use the manifest file that is stored in the Github respository for this integration. An example manifest file (YAML) is shown below and located in the github repository /img folder: 
 
-![Example YAML File](img/slack-application-manifest.yml)
 
 _metadata:<br>
   major_version: 1 <br>
@@ -69,16 +69,18 @@ features: <br>
     display_name: `SecZetta Bot` <br>
     always_online: false <br>
 oauth_config: <br>
-  scopes:
-    bot:
-      - chat:write
-      - chat:write.customize
-      - chat:write.public
-      - user:read
-settings:
-  org_deploy_enabled: false
-  socket_mode_enabled: false
-  token_rotation_enabled: false
+  scopes: <br>
+    bot: <br>
+      - chat:write <br>
+      - chat:write.customize <br>
+      - chat:write.public <br>
+      - users:read <br>
+      - users:read.email <br>
+      - users.profile:read <br>
+settings: <br>
+  org_deploy_enabled: false <br>
+  socket_mode_enabled: false <br>
+  token_rotation_enabled: false <br>
 
 The `name` field indicates the name of the application and the `display_name` is what shows up in the slack interface as the bot name, see below:
 
@@ -87,17 +89,24 @@ The `name` field indicates the name of the application and the `display_name` is
 `Note:` You can add a logo if you like, but it needs to be between 512 and 2000 pixels and no larger than 16mb.
 
 - Next you are asked about the slack workspace you want to develop your application in. Select the workspace you want to use. 
-- Next you are shown a default app manifest file You can copy the content of the provided manifest file. Update the `name` and `display_name` fields if so desired and no application with the same name exists in the workspace. 
+- Next you are shown a default app manifest file You can copy the content of the provided manifest yml file. Update the `name` and `display_name` fields if so desired and no application with the same name exists in the workspace. 
 - Next you are shown a summary of the application oauth permissions and features and if these are correct, then press the `Create` button.
 - Next you are shown the full manifest of the application in the Basic Information section of the application.
 - Next go to the OAuth & Permission Section on the screen and a message appears that to get your token, you need to install the app into the workspace first. 
 - Next install the application into the workdspace by selecting the button to do so.
 - After the install is succesful, you see the `Bot User Oauth Token` displayed and you can use the `Copy` button to copy the token value as you need it for the configuration of the SecZetta workflow to send a Slack message. 
 
+Note: Any changes to the OAuth permissions requires the application to be reinstalled in the workspace.
+
 This concludes the slack configuration part.
 
 ### SecZetta Configuration
-The configuration on the SecZetta side requires administrative accces to be able to configure a workflow to be used to send the slack message. 
+The configuration on the SecZetta side requires administrative accces to be able to configure the workflows get the Slack ID of the user and so it can be used to send the slack message. 
+
+
+#### SecZetta Update Workflow Configuration to retrieve Slack ID
+To be able to send a Slack message to a user we need to retrieve the Slack ID or Name of the Slack account and store it in an SZ attribute. To be able to obtain the Slack ID of a user use the Slack API called `users.lookupByEmail` and provide the email address on the API call using liquid to reference the email attribute of the user using `{{attribute.email}}`. For example:
+https://slack.com/api/users.lookupByEmail?email={{ attribute.email }}     
 
 #### SecZetta Workflow Configuration to send a Slack Message
 Create a new `Create` workflow and select REST API as the only action in the workflow so it can be called from any other workflow.
@@ -147,4 +156,6 @@ Example 2: This example send the profile name that is created during the executi
 #### Workflow Permissions
 
 The workflow requires no permissions as it is meant to be executed as a sub routine. 
+
+
 
